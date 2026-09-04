@@ -1,0 +1,20 @@
+{
+    "description": "nzyme123",
+    "processors": [
+      {
+       "grok": {
+         "field": "message",
+         "patterns": [
+           "%{INT:log_version} %{TIMESTAMP_ISO8601:log_timestamp} %{WORD:app_name} %{WORD:service_name} - - \\[%{WORD:namespace}@%{INT:namespace_id} event_type=\"%{DATA:event_type}\" event_type_(?:subsystem|category)=\"%{DATA:event_type_subsystem}\" event_type_human_readable=\"%{DATA:event_type_human_readable}\" event_supertype=\"%{DATA:event_supertype}\" timestamp=\"%{TIMESTAMP_ISO8601:event_timestamp}\"\\] %{GREEDYDATA:details}"
+        ],
+          "ignore_failure": true
+       },
+        "set": {
+           "field": "event.module",
+           "value": "nzyme"
+        }
+
+      }
+    ]
+}
+
